@@ -4,7 +4,7 @@ const timestamps = require('mongoose-timestamp');
 
 
 const userSchema = new mongoose.Schema({
-    firsName: {
+    firstName: {
         type:String,
         required: true,
             min: 3,
@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
         role:{
             type:String,
             enum:['user','admin'],
-            default: 'admin'
+            default: 'user'
         },
         contactNumber: {
             type:String
@@ -62,6 +62,10 @@ const userSchema = new mongoose.Schema({
         this.hash_password = bcrypt.hashSync(password, 10)
     }); 
     //virtuals- not stored in mongodb-ideal for computed properties
+
+    userSchema.virtual('fullName').get(function(){
+        return `${this.firstName} ${this.lastName}`;
+    }); //to get the fullname in a virtual variable
     
     userSchema.methods = {
         authenticate: function(password) {
