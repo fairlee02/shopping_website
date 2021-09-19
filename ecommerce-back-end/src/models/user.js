@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const timestamps = require('mongoose-timestamp');
 
 
 const userSchema = new mongoose.Schema({
-        firsName: {
-            type:String,
-            required: true,
+    firsName: {
+        type:String,
+        required: true,
             min: 3,
             max:20
         },
@@ -26,7 +27,7 @@ const userSchema = new mongoose.Schema({
             required: true,
             trim:true, //cut out the white spaces
             unique:true, //make it unique
-            index: true, //seach for the username
+            index: true, //search for the username
             lowercase:true
         },
         email: {
@@ -50,12 +51,25 @@ const userSchema = new mongoose.Schema({
         },
         profilePicture:{
             type:String
-        }, timestamps:true
+        },
+        
+    }, {
+        timestamps: true
     });
-
+    
+    
     userSchema.virtual('password').set(function(password){
-            //this.hash_password = 
-    }); //virtuals- not stored in mongodb-ideal for computed properties
-    //bcrypt ->
+        this.hash_password = bcrypt.hashSync(password, 10)
+    }); 
+    //virtuals- not stored in mongodb-ideal for computed properties
+    
+    userSchema.methods = {
+        authenticate: function(password) {
+            return bcrypt.compareSync(password, this.hash_password)
+        }
+    };
+    
+    //bcrypt -> hashing passwpord for security
+    
 
-module.exports =mongoose.model('User',userSchema);
+    module.exports = mongoose.model('User',userSchema);
