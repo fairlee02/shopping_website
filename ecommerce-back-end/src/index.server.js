@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 //routes
 
 const authRoutes = require('./routes/auth')
+const adminRoutes = require('./routes/admin/auth')
 
 //environment variable
 env.config();
@@ -31,6 +32,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
+app.use('/api', adminRoutes);
 app.use('/api', authRoutes); //as a middleware to prefix all the request
 
 //middlewares => when making a request/handling request..manipulating data
