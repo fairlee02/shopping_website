@@ -1,13 +1,13 @@
 const express = require('express');
 const env = require('dotenv');
 const app = express();
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 //routes
 
 const authRoutes = require('./routes/auth')
 const adminRoutes = require('./routes/admin/auth')
+const categoryRoutes= require('./routes/admin/category')
 
 //environment variable
 env.config();
@@ -25,15 +25,13 @@ mongoose.connect(
      console.log('Database Connected')
 });
 
-//json-parser
-app.use(bodyParser.urlencoded({
-    extended: true
-  }));
 
-app.use(bodyParser.json());
+
+app.use(express.json());
 
 app.use('/api', adminRoutes);
 app.use('/api', authRoutes); //as a middleware to prefix all the request
+app.use('/api', categoryRoutes);
 
 //middlewares => when making a request/handling request..manipulating data
 

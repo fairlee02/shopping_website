@@ -1,4 +1,4 @@
-const User = require('../../models/user');
+const User = require('../../models/User');
 const jwt = require('jsonwebtoken'); //token algorithm for privatekey for verification SYNTAX: .sign     ('example:username',''verification' -secret key)
 
 exports.signup = (req,res) => {
@@ -72,10 +72,3 @@ exports.signin = (req,res) =>{
 
 
 
-exports.requireSignin = (req,res,next) => {
-    const token = req.headers.authorization.split(" ")[1];
-    //console.log(token); //verification
-    const user = jwt.verify(token, process.env.JWT_SECRET)
-    req.user = user;
-    next()
-}
