@@ -15,7 +15,7 @@ env.config();
 //mongoDB-connection
 //mongodb+srv://<username>:<password>@cluster0.zv22h.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 mongoose.connect(
-    `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.zv22h.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`, 
+    `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.duixl.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`, 
     {
         useNewUrlParser:true, 
         useUnifiedTopology: true,
