@@ -12,7 +12,7 @@ const categorySchema = new mongoose.Schema({
                 required:true,
                 unique: true
             },
-            parentId: {
+            parentId: { //this is where the category will fall
                 type: String
             }
 }, {timestamps:true});

@@ -1,10 +1,14 @@
-const User = require('../../models/User');
+const User = require('../models/User');
 const jwt = require('jsonwebtoken'); //token algorithm for privatekey for verification SYNTAX: .sign     ('example:username',''verification' -secret key)
 
+
+
+
 exports.signup = (req,res) => {
+
     User.findOne({email: req.body.email}).exec((error,user)=> {
         if(user) return res.status(400).json({
-            message: 'Admin already registered'
+            message: 'User already registered'
         });
 
         //destructuring the body for new user
@@ -22,21 +26,20 @@ exports.signup = (req,res) => {
             lastName,
             email,
             password,
-            username: Math.random().toString(),
-            role : 'admin' 
+            username: Math.random().toString()
         });
 
         _user.save((error, data) =>{
             if(error){
                 return res.status(400).json({
-                    message: 'Admin Something went wrong'
+                    message: 'Something went wrong'
                 });
             }
 
             if(data){
                 //201-created success
                 return res.status(201).json({
-                    message:'Admin created successfully'
+                    message:'User created successfully'
                 })
             }
         })
@@ -48,8 +51,8 @@ exports.signin = (req,res) =>{
         if(error) return res.status(400).json({error});
         if(user) {
 
-            if(user.authenticate(req.body.password) && (user.role === 'admin')) {
-                const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+            if(user.authenticate(req.body.password)) {
+                const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: '3h'});
                 const { _id ,firstName,middleName,lastName,email,role, fullName} = user; //destructor data
                 res.status(200).json({
                     token, 
@@ -60,7 +63,7 @@ exports.signin = (req,res) =>{
             
             } else {
                 return res.status(400).json({
-                    message: 'invalid Login'
+                    message: 'invalid Password'
                 })
             }
 
