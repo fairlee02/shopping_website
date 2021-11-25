@@ -5,10 +5,11 @@ const mongoose = require('mongoose');
 
 //routes
 
-const authRoutes = require('./routes/authRoutes')
-const adminRoutes = require('./routes/admin/authAdminRoutes')
-const categoryRoutes= require('./routes/categoryRoutes')
-const productRoutes= require('./routes/productRoutes')
+const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/admin/authAdminRoutes');
+const categoryRoutes= require('./routes/categoryRoutes');
+const productRoutes= require('./routes/productRoutes');
+const cartRoutes= require('./routes/cartRoutes');
 
 //environment variable
 env.config();
@@ -34,6 +35,7 @@ app.use('/api', adminRoutes);
 app.use('/api', authRoutes); //as a middleware to prefix all the request
 app.use('/api', categoryRoutes);
 app.use('/api', productRoutes);
+app.use('/api',cartRoutes);
 
 //middlewares => when making a request/handling request..manipulating data
 

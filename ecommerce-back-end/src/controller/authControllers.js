@@ -52,7 +52,7 @@ exports.signin = (req,res) =>{
         if(user) {
 
             if(user.authenticate(req.body.password)) {
-                const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: '3h'});
+                const token = jwt.sign({_id: user._id, role : user.role}, process.env.JWT_SECRET, {expiresIn: '3h'});
                 const { _id ,firstName,middleName,lastName,email,role, fullName} = user; //destructor data
                 res.status(200).json({
                     token, 

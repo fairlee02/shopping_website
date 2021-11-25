@@ -38,6 +38,7 @@ const productSchema = new mongoose.Schema({
                 }
             ],
             category:{ 
+                //foreign key , or linking
                 type: mongoose.Schema.Types.ObjectId, ref: 'Category',
                 required:true 
             },
